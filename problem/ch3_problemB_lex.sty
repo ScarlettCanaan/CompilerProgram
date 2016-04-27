@@ -1,0 +1,32 @@
+%{
+#include <string.h>
+int pos = 0;
+%}
+noodles     [a-zA-Z \t]+noodles[a-zA-Z \t]+
+Favorite    [a-zA-Z \t]+Favorite[a-zA-Z \t]+
+%%
+{Favorite}  { getPos(); }
+{noodles}	{ checkPos(); }
+\n|.           {  }
+%%
+int main(int argc, char *argv[]) {
+	yylex();
+	return (0);
+}
+
+getPos() {
+	pos = strstr(yytext,"Favorite") - yytext;
+	printf("%d\n", pos);
+}
+checkPos() {
+	int real = strstr(yytext,"noodles") - yytext;
+	if( pos == real) {
+		printf("%s\n",yytext);
+	}
+	int real2 = strstr(yytext+real+7, "noodles") - yytext;
+	if (real2 != -1) {
+		if( pos == real2) {
+		printf("%s\n",yytext);
+	}
+	}
+}
