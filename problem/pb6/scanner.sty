@@ -1,0 +1,11 @@
+%{	
+%}
+noodles     [a-zA-Z ]+noodles[a-zA-Z ]+
+%%
+{noodles}	{ printf("%s",yytext); }
+\n|.           {  }
+%%
+int main(int argc, char *argv[]) {
+	yylex();
+	return (0);
+}

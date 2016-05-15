@@ -1,0 +1,12 @@
+%{
+	#include "ch6_problem_yacc.tab.h"
+%}
+%%
+\n	    { ECHO; return (0);  /* EOF */}
+[ \t]+  { /*do nothing*/ }
+[0-9]   { ECHO; yylval.ival = atoi(yytext); return(digits); }
+\+     { ECHO; return(yytext[0]); }
+"->" 	{ ECHO; yylval.ival = '>'; return(LoveArrowShoooooooot___UMI); }
+[A-Z][a-z]?  { ECHO; yylval.cval = strdup(yytext); return(letter); }
+%%
+
