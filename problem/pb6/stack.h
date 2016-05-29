@@ -88,7 +88,7 @@ DataType getTop(PLinkStack stack)
 void showStack(PLinkStack stack)  
 {  
     if(isEmptyStack(stack))  
-        printf("当前栈为空！无内容可显示。\n");  
+        printf("EmptyStack!\n");  
     else  
     {  
         PNode p;  

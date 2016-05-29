@@ -762,7 +762,7 @@ YY_RULE_SETUP
 case 5:
 YY_RULE_SETUP
 #line 9 "ch6_problem_lex.sty"
-{ ECHO; yylval.ival = '>'; return(LoveArrowShoooooooot___UMI); }
+{ ECHO; yylval.ival = '->'; return(target); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP

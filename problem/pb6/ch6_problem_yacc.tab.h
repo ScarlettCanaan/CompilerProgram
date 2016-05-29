@@ -47,7 +47,7 @@ extern int yydebug;
   {
     digits = 258,
     letter = 259,
-    LoveArrowShoooooooot___UMI = 260
+    target = 260
   };
 #endif
 
@@ -56,7 +56,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 8 "ch6_problem_yacc.y" /* yacc.c:1909  */
+#line 10 "ch6_problem_yacc.y" /* yacc.c:1909  */
 
 int ival;
 char* cval;
