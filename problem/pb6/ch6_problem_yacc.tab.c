@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "ch6_problem_yacc.y" /* yacc.c:339  */
+#line 1 "ch6_problem_yacc_test.y" /* yacc.c:339  */
 
 #include <stdio.h>
 #include <string.h>
@@ -107,8 +107,8 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    digits = 258,
-    letter = 259,
+    DIGITS = 258,
+    LETTER = 259,
     target = 260
   };
 #endif
@@ -118,7 +118,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 10 "ch6_problem_yacc.y" /* yacc.c:355  */
+#line 10 "ch6_problem_yacc_test.y" /* yacc.c:355  */
 
 int ival;
 char* cval;
@@ -378,23 +378,23 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  8
+#define YYFINAL  6
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   13
+#define YYLAST   28
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  9
+#define YYNTOKENS  10
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  8
+#define YYNNTS  13
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  13
+#define YYNRULES  22
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  20
+#define YYNSTATES  28
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   260
+#define YYMAXUTOK   261
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -407,7 +407,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       6,     8,     2,     7,     2,     2,     2,     2,     2,     2,
+       8,     9,     2,     7,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -429,15 +429,16 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5
+       5,     6
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    21,    21,    21,    23,    24,    26,    26,    27,    29,
-      30,    31,    33,    46
+       0,    23,    23,    23,    25,    26,    28,    30,    31,    33,
+      34,    36,    37,    39,    40,    42,    43,    45,    46,    48,
+      49,    51,    52
 };
 #endif
 
@@ -446,9 +447,10 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "digits", "letter", "target", "'('",
-  "'+'", "')'", "$accept", "line", "$@1", "expression", "term", "$@2",
-  "subterm", "item", YY_NULLPTR
+  "$end", "error", "$undefined", "DIGITS", "LETTER", "target",
+  "left-bracket", "'+'", "'('", "')'", "$accept", "line", "$@1",
+  "expression", "chemical", "num", "molecules", "non_molecules",
+  "non_term", "non_digit", "item", "subitem", "element", YY_NULLPTR
 };
 #endif
 
@@ -457,16 +459,16 @@ static const char *const yytname[] =
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,   260,    40,    43,    41
+       0,   256,   257,   258,   259,   260,   261,    43,    40,    41
 };
 # endif
 
-#define YYPACT_NINF -8
+#define YYPACT_NINF -14
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-8)))
+  (!!((Yystate) == (-14)))
 
-#define YYTABLE_NINF -1
+#define YYTABLE_NINF -15
 
 #define yytable_value_is_error(Yytable_value) \
   0
@@ -475,8 +477,9 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       1,    -8,    -8,     2,    -4,    -8,     0,     1,    -8,    -8,
-       1,    -8,    -8,     1,    -8,     3,     4,     1,     5,    -8
+      -1,   -14,     1,    -2,   -14,     4,   -14,   -14,    -1,     3,
+     -14,     2,     5,    -1,   -14,   -14,   -14,   -14,     3,     4,
+       7,   -14,     0,     8,   -14,    -4,   -14,   -14
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -484,57 +487,65 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-      11,    12,    13,     0,     0,     5,     8,     9,     1,     2,
-      11,     6,    10,    11,     4,     0,     3,    11,     0,     7
+       8,     7,     0,     0,     5,    14,     1,     2,     8,    18,
+       6,     0,    10,     8,     4,    21,    22,    17,    20,     0,
+       3,    19,     0,    16,    15,    12,    11,     9
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -8,    -8,    -8,    -5,    -1,    -8,    -7,    -8
+     -14,   -14,   -14,     6,     9,   -14,   -13,   -14,   -14,   -14,
+      -3,    10,   -14
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     3,    13,     4,     5,    15,     6,     7
+      -1,     2,    13,     3,     4,     5,    10,    27,    11,    25,
+      12,    17,    18
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
      positive, shift that token.  If negative, reduce the rule whose
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
-static const yytype_uint8 yytable[] =
+static const yytype_int8 yytable[] =
 {
-      12,     9,     8,    10,     1,     2,    11,    17,    16,    14,
-      18,    10,     0,    19
+       9,     6,     1,     7,   -14,     8,    15,    16,     9,    23,
+      19,    24,    26,   -13,     8,     0,    22,    14,     0,    20,
+       0,     0,     0,     0,     0,     0,     0,     0,    21
 };
 
 static const yytype_int8 yycheck[] =
 {
-       7,     5,     0,     7,     3,     4,     6,     4,    13,    10,
-      17,     7,    -1,     8
+       4,     0,     3,     5,     8,     7,     3,     4,     4,     9,
+       8,     3,    25,     8,     7,    -1,    19,     8,    -1,    13,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    18
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,     4,    10,    12,    13,    15,    16,     0,     5,
-       7,     6,    15,    11,    13,    14,    12,     4,    15,     8
+       0,     3,    11,    13,    14,    15,     0,     5,     7,     4,
+      16,    18,    20,    12,    14,     3,     4,    21,    22,     8,
+      13,    21,    20,     9,     3,    19,    16,    17
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,     9,    11,    10,    12,    12,    14,    13,    13,    15,
-      15,    15,    16,    16
+       0,    10,    12,    11,    13,    13,    14,    15,    15,    16,
+      16,    17,    17,    18,    18,    19,    19,    20,    20,    21,
+      21,    22,    22
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     0,     4,     3,     1,     0,     6,     1,     1,
-       2,     0,     1,     1
+       0,     2,     0,     4,     3,     1,     2,     1,     0,     6,
+       1,     1,     0,     1,     0,     1,     0,     2,     1,     2,
+       0,     1,     1
 };
 
 
@@ -1211,85 +1222,103 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 21 "ch6_problem_yacc.y" /* yacc.c:1646  */
+#line 23 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
     { rightHandSide = 1; }
-#line 1217 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 1228 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 23 "ch6_problem_yacc.y" /* yacc.c:1646  */
-    { printf(" match expression->expression + term\n"); }
-#line 1223 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 25 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { printf(" Match expression->expression + chemical\n"); }
+#line 1234 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 24 "ch6_problem_yacc.y" /* yacc.c:1646  */
-    { printf(" match expression->term\n"); }
-#line 1229 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 26 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { printf(" Match expression->chemical\n"); }
+#line 1240 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 26 "ch6_problem_yacc.y" /* yacc.c:1646  */
-    {bracketSets++; printf("((\n");}
-#line 1235 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 28 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { printf(" Match chemical->%d molecules\n",(yyvsp[-1].ival)); }
+#line 1246 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 26 "ch6_problem_yacc.y" /* yacc.c:1646  */
-    { printf(" match term->( term )\n"); }
-#line 1241 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 30 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    {(yyval.ival) = (yyvsp[0].ival);}
+#line 1252 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 27 "ch6_problem_yacc.y" /* yacc.c:1646  */
-    { printf(" match term->subterm\n"); }
-#line 1247 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 31 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    {(yyval.ival) = 1;}
+#line 1258 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 29 "ch6_problem_yacc.y" /* yacc.c:1646  */
-    { printf(" match subterm->item\n"); }
-#line 1253 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 33 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { printf(" Match molecules->non_term ( item ) molecules\n"); }
+#line 1264 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 30 "ch6_problem_yacc.y" /* yacc.c:1646  */
-    { printf(" match subterm->item subterm\n"); }
-#line 1259 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 34 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { printf(" Match molecules->item\n"); }
+#line 1270 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
-  case 12:
-#line 33 "ch6_problem_yacc.y" /* yacc.c:1646  */
-    { /*printf(" match item->digits\n");*/
-										  if (!rightHandSide)
-										  {
-											  printf("digits:%d\n", (yyvsp[0].ival));
-											  s->top->info.value += (yyvsp[0].ival); 
-											  //printf("%s %d\n",s->top->info.element, s->top->info.value);
-										  }else
-										  {
-										  	  printf("digits:-%d\n", (yyvsp[0].ival));
-										  	  s->top->info.value -= (yyvsp[0].ival);
-										  }
-										}
+  case 11:
+#line 36 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { printf(" Match non_molecules->molecules\n"); }
 #line 1276 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
+  case 12:
+#line 37 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { printf("Match non_molecules-> lambda\n"); }
+#line 1282 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+    break;
+
   case 13:
-#line 46 "ch6_problem_yacc.y" /* yacc.c:1646  */
-    { /*printf(" match item->letter\n");*/
-		    							  printf("letter:%s\n", (yyvsp[0].cval)); 
-		    							  DataType node; 
-		    							  node.element = (yyvsp[0].cval); 
-		    							  node.value = 0; 
-		    							  push(s, node);
-		    							  //printf("%s %d\n",s->top->info.element, s->top->info.value);
-		    							}
-#line 1289 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 39 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { printf(" Match non_term->item\n"); }
+#line 1288 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 14:
+#line 40 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { printf(" Match non_term-> lambda\n"); }
+#line 1294 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 15:
+#line 42 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { printf(" Match non_digit->%d\n", (yyvsp[0].ival)); (yyval.ival) = (yyvsp[0].ival); }
+#line 1300 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 16:
+#line 43 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { printf(" Match non_digit->1\n"); (yyval.ival) = 1; }
+#line 1306 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 17:
+#line 45 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { printf(" Match item->LETTER subitem\n"); }
+#line 1312 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 19:
+#line 48 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { printf(" Match subitem->subitem element\n"); }
+#line 1318 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1293 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 1322 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1517,7 +1546,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 55 "ch6_problem_yacc.y" /* yacc.c:1906  */
+#line 54 "ch6_problem_yacc_test.y" /* yacc.c:1906  */
 
 void yyerror (const char *message)
 {
