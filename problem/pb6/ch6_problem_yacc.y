@@ -25,7 +25,7 @@ char* cval;
 %type <ival> non_digit
 %left '+'
 %%
-line	    :	 expression  target { rightHandSide = 1; }  expression	{ showStack(record); 
+line	    :	 expression  target { rightHandSide = 1; }  expression	{ record = sort(record); showStack(record); }
 	    ;
 expression  :	 expression  '+'  chemical
 	    |	 chemical
