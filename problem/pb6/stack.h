@@ -1,5 +1,6 @@
 #include <stdio.h>  
 #include <malloc.h>  
+#include <string.h>
 
 typedef struct datatype
 {
@@ -7,22 +8,22 @@ typedef struct datatype
 	int value;
 }DataType;
 
-struct Node;                        //单链表结点类型  
-typedef struct Node *PNode;         //结点指针类型  
+struct Node;                        
+typedef struct Node *PNode;
   
-typedef struct Node                 //单链表结点结构  
+typedef struct Node        
 {     
-    DataType info;                  //结点数据域  
-    PNode link;                     //结点指针域
+    DataType info;         
+    PNode link;            
 }Node;  
   
-typedef struct LinkStack           //链表栈定义  
+typedef struct LinkStack   
 {  
-    PNode top;        //栈顶指针  
+    PNode top;
 }LinkStack;  
   
-typedef struct LinkStack * PLinkStack;    //链表栈的指针类型  
-  
+typedef struct LinkStack * PLinkStack;
+ 
 PLinkStack createEmptyStack(void)  
 {  
     PLinkStack stack=(PLinkStack)malloc(sizeof(struct LinkStack));  
@@ -37,25 +38,23 @@ int isEmptyStack(PLinkStack stack)
 {  
     return (stack->top == NULL);  
 }  
-  
-  
+ 
 int push(PLinkStack stack,DataType x)  
 {  
-    PNode p =(PNode)malloc(sizeof(struct Node));  
+    PNode p =(PNode)malloc(sizeof(struct Node)); 
     if(p == NULL)    
     {
         return 0;  
     }  
     else  
     {  
+        p->link = NULL; 
         p->info = x;  
         p->link=stack->top;
         stack->top=p;  
         return 1;  
     }
 }
-
-
 
 int pop(PLinkStack stack)  
 {  
@@ -66,21 +65,18 @@ int pop(PLinkStack stack)
     else  
     {  
         PNode p;  
-        p=stack->top;   //删除最后一个结点  
+        p=stack->top;
         stack->top = stack->top->link;  
         free(p);  
         return 1;  
     }  
 }  
-  
-//取栈顶元素  
+
 DataType getTop(PLinkStack stack)  
 {  
     return (stack->top->info);  
 }  
   
-  
-//显示栈内所有元素   
 void showStack(PLinkStack stack)  
 {  
     if(isEmptyStack(stack));
@@ -103,7 +99,6 @@ void showStack(PLinkStack stack)
     }  
 }
   
-//把栈销毁  
 void destroyStack(PLinkStack stack)  
 {  
     if(stack)  
@@ -112,3 +107,53 @@ void destroyStack(PLinkStack stack)
         free(stack);  
     }  
 }  
+
+PLinkStack sort(PLinkStack stack)
+{
+    int addFlag = 0;
+    PLinkStack dest = createEmptyStack();
+    PNode topValue;
+    if(isEmptyStack(stack)) return stack;
+    topValue = stack->top;
+    push(dest, topValue->info);
+    pop(stack);
+    while(!isEmptyStack(stack))
+    {
+        PNode p = dest->top;
+        PNode prev = dest->top;
+        topValue = stack->top;
+        while(p != NULL)
+        {
+            if (strcmp(p->info.element, topValue->info.element) > 0)
+            {
+                if (p == dest->top)
+                {
+                    push(dest, topValue->info);
+                    addFlag = 1;
+                    break;
+                }
+                else
+                {
+                    PNode temp =(PNode)malloc(sizeof(struct Node)); 
+                    temp->link = p; 
+                    temp->info = topValue->info;  
+                    prev->link=temp;
+                    addFlag = 1;
+                    break;
+                }
+            }
+            prev = p;
+            p = p->link;
+        }
+        if (!addFlag)
+        {
+            PNode temp =(PNode)malloc(sizeof(struct Node)); 
+            temp->link = NULL; 
+            temp->info = topValue->info;  
+            prev->link=temp;
+        }
+        pop(stack);
+        addFlag = 0;
+    }
+    return dest;
+}
