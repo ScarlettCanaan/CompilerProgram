@@ -743,7 +743,7 @@ case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
 #line 5 "ch6_problem_lex.sty"
-{ ECHO; return (0);  /* EOF */}
+{ return (0);  /* EOF */}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
@@ -753,32 +753,32 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 #line 7 "ch6_problem_lex.sty"
-{ ECHO; yylval.ival = atoi(yytext); return(DIGITS); }
+{ yylval.ival = atoi(yytext); return(DIGITS); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 8 "ch6_problem_lex.sty"
-{ ECHO; return(yytext[0]); }
+{ return(yytext[0]); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 9 "ch6_problem_lex.sty"
-{ ECHO; yylval.ival = '->'; return(target); }
+{ yylval.ival = '->'; return(target); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 10 "ch6_problem_lex.sty"
-{ ECHO; return(yytext[0]); }
+{ return(yytext[0]); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 11 "ch6_problem_lex.sty"
-{ ECHO; return(yytext[0]); }
+{ return(yytext[0]); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 12 "ch6_problem_lex.sty"
-{ ECHO; yylval.cval = strdup(yytext); return(LETTER); }
+{ yylval.cval = strdup(yytext); return(LETTER); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP

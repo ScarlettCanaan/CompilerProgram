@@ -13,7 +13,7 @@ typedef struct Node *PNode;         //结点指针类型
 typedef struct Node                 //单链表结点结构  
 {     
     DataType info;                  //结点数据域  
-    PNode link;                     //结点指针域  
+    PNode link;                     //结点指针域
 }Node;  
   
 typedef struct LinkStack           //链表栈定义  
@@ -23,48 +23,44 @@ typedef struct LinkStack           //链表栈定义
   
 typedef struct LinkStack * PLinkStack;    //链表栈的指针类型  
   
-//创建一个的空栈  
 PLinkStack createEmptyStack(void)  
 {  
     PLinkStack stack=(PLinkStack)malloc(sizeof(struct LinkStack));  
     if(stack == NULL)  
-        printf("存储分配失败，请重建栈！\n");  
+        return NULL;
     else  
         stack->top=NULL;  
     return stack;     
 }  
   
-//判断栈是否为空栈  
 int isEmptyStack(PLinkStack stack)  
 {  
     return (stack->top == NULL);  
 }  
   
   
-//进栈,成功返回1，失败返回0  
 int push(PLinkStack stack,DataType x)  
 {  
     PNode p =(PNode)malloc(sizeof(struct Node));  
-    if(p == NULL )    
-    {  
-        printf("新结点分配内存失败，进栈失败，请重试！\n");  
+    if(p == NULL)    
+    {
         return 0;  
     }  
     else  
     {  
         p->info = x;  
-        p->link=stack->top;     //替换栈顶元素  
+        p->link=stack->top;
         stack->top=p;  
         return 1;  
-    }  
-}  
-  
-//出栈，成功返回1，失败返回0  
+    }
+}
+
+
+
 int pop(PLinkStack stack)  
 {  
     if(isEmptyStack(stack))  
     {  
-        printf("栈为空！\n");  
         return 0;  
     }  
     else  
@@ -87,26 +83,25 @@ DataType getTop(PLinkStack stack)
 //显示栈内所有元素   
 void showStack(PLinkStack stack)  
 {  
-    if(isEmptyStack(stack))  
-        printf("EmptyStack!\n");  
+    if(isEmptyStack(stack));
     else  
     {  
         PNode p;  
         p=stack->top;
         while(p->link != NULL)  
         {  
-            printf("%s %d\n",p->info.element, p->info.value);  
+            if (p->info.value != 0)
+            {
+                printf("%s %d\n",p->info.element, p->info.value);  
+            }
             p=p->link;
         }  
-        printf("%s %d\n",p->info.element, p->info.value);    //显示最后一个元素  
+        if (p->info.value != 0)
+        {
+            printf("%s %d\n",p->info.element, p->info.value);  
+        }
     }  
-}  
-  
-//把栈置空  
-void setEmpty(PLinkStack stack)  
-{  
-    stack->top=NULL;  
-}  
+}
   
 //把栈销毁  
 void destroyStack(PLinkStack stack)  

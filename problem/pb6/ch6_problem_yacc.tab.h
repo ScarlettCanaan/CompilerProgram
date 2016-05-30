@@ -56,7 +56,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 10 "ch6_problem_yacc_test.y" /* yacc.c:1909  */
+#line 15 "ch6_problem_yacc_test.y" /* yacc.c:1909  */
 
 int ival;
 char* cval;

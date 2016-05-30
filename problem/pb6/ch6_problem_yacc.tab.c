@@ -68,11 +68,16 @@
 #include <string.h>
 #include "stack.h"
 void yyerror(const char *message);
+PLinkStack record;
 PLinkStack s;
+PLinkStack bracket_s;
+PNode temp;
 int bracketSets = 0;
 int rightHandSide = 0;
+int firsFlag = 1;
+int addedFlag = 0;
 
-#line 76 "ch6_problem_yacc.tab.c" /* yacc.c:339  */
+#line 81 "ch6_problem_yacc.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -118,12 +123,12 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 10 "ch6_problem_yacc_test.y" /* yacc.c:355  */
+#line 15 "ch6_problem_yacc_test.y" /* yacc.c:355  */
 
 int ival;
 char* cval;
 
-#line 127 "ch6_problem_yacc.tab.c" /* yacc.c:355  */
+#line 132 "ch6_problem_yacc.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -138,7 +143,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 142 "ch6_problem_yacc.tab.c" /* yacc.c:358  */
+#line 147 "ch6_problem_yacc.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -380,16 +385,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  6
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   28
+#define YYLAST   19
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  10
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  13
+#define YYNNTS  15
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  22
+#define YYNRULES  24
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  28
+#define YYNSTATES  30
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
@@ -436,9 +441,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    23,    23,    23,    25,    26,    28,    30,    31,    33,
-      34,    36,    37,    39,    40,    42,    43,    45,    46,    48,
-      49,    51,    52
+       0,    28,    28,    28,    30,    31,    33,    71,    72,    74,
+      75,    77,    81,    82,    84,    85,    87,   101,   115,   114,
+     136,   158,   159,   161,   180
 };
 #endif
 
@@ -449,8 +454,8 @@ static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "DIGITS", "LETTER", "target",
   "left-bracket", "'+'", "'('", "')'", "$accept", "line", "$@1",
-  "expression", "chemical", "num", "molecules", "non_molecules",
-  "non_term", "non_digit", "item", "subitem", "element", YY_NULLPTR
+  "expression", "chemical", "num", "molecules", "left", "non_mole",
+  "non_term", "non_digit", "item", "$@2", "subitem", "element", YY_NULLPTR
 };
 #endif
 
@@ -463,12 +468,12 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF -14
+#define YYPACT_NINF -16
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-14)))
+  (!!((Yystate) == (-16)))
 
-#define YYTABLE_NINF -15
+#define YYTABLE_NINF -16
 
 #define yytable_value_is_error(Yytable_value) \
   0
@@ -477,9 +482,9 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -1,   -14,     1,    -2,   -14,     4,   -14,   -14,    -1,     3,
-     -14,     2,     5,    -1,   -14,   -14,   -14,   -14,     3,     4,
-       7,   -14,     0,     8,   -14,    -4,   -14,   -14
+      -1,   -16,     1,    -2,   -16,     4,   -16,   -16,    -1,   -16,
+     -16,     2,     5,    -1,   -16,     3,   -16,     7,   -16,   -16,
+     -16,     3,     4,   -16,     0,     8,   -16,    -4,   -16,   -16
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -487,23 +492,23 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       8,     7,     0,     0,     5,    14,     1,     2,     8,    18,
-       6,     0,    10,     8,     4,    21,    22,    17,    20,     0,
-       3,    19,     0,    16,    15,    12,    11,     9
+       8,     7,     0,     0,     5,    15,     1,     2,     8,    18,
+       6,     0,    10,     8,     4,    22,    11,     3,    23,    24,
+      19,    22,     0,    21,     0,    17,    16,    13,    12,     9
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -14,   -14,   -14,     6,     9,   -14,   -13,   -14,   -14,   -14,
-      -3,    10,   -14
+     -16,   -16,   -16,     6,     9,   -16,   -15,   -16,   -16,   -16,
+     -16,    -7,   -16,    -5,   -16
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,    13,     3,     4,     5,    10,    27,    11,    25,
-      12,    17,    18
+      -1,     2,    13,     3,     4,     5,    10,    22,    29,    11,
+      27,    12,    15,    20,    21
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -511,16 +516,14 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       9,     6,     1,     7,   -14,     8,    15,    16,     9,    23,
-      19,    24,    26,   -13,     8,     0,    22,    14,     0,    20,
-       0,     0,     0,     0,     0,     0,     0,     0,    21
+       9,     6,     1,     7,   -15,     8,    18,    19,     9,    25,
+      16,    26,    28,   -14,     8,    24,    23,    14,     0,    17
 };
 
 static const yytype_int8 yycheck[] =
 {
        4,     0,     3,     5,     8,     7,     3,     4,     4,     9,
-       8,     3,    25,     8,     7,    -1,    19,     8,    -1,    13,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    18
+       8,     3,    27,     8,     7,    22,    21,     8,    -1,    13
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -528,24 +531,24 @@ static const yytype_int8 yycheck[] =
 static const yytype_uint8 yystos[] =
 {
        0,     3,    11,    13,    14,    15,     0,     5,     7,     4,
-      16,    18,    20,    12,    14,     3,     4,    21,    22,     8,
-      13,    21,    20,     9,     3,    19,    16,    17
+      16,    19,    21,    12,    14,    22,     8,    13,     3,     4,
+      23,    24,    17,    23,    21,     9,     3,    20,    16,    18
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
        0,    10,    12,    11,    13,    13,    14,    15,    15,    16,
-      16,    17,    17,    18,    18,    19,    19,    20,    20,    21,
-      21,    22,    22
+      16,    17,    18,    18,    19,    19,    20,    20,    22,    21,
+      21,    23,    23,    24,    24
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     0,     4,     3,     1,     2,     1,     0,     6,
-       1,     1,     0,     1,     0,     1,     0,     2,     1,     2,
-       0,     1,     1
+       0,     2,     0,     4,     3,     1,     2,     1,     0,     7,
+       1,     0,     1,     0,     1,     0,     1,     0,     0,     3,
+       1,     2,     0,     1,     1
 };
 
 
@@ -1222,103 +1225,215 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 23 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+#line 28 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
     { rightHandSide = 1; }
-#line 1228 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 1231 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
-  case 4:
-#line 25 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    { printf(" Match expression->expression + chemical\n"); }
-#line 1234 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 5:
-#line 26 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    { printf(" Match expression->chemical\n"); }
-#line 1240 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+  case 3:
+#line 28 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { showStack(record); }
+#line 1237 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 28 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    { printf(" Match chemical->%d molecules\n",(yyvsp[-1].ival)); }
-#line 1246 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 33 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { 
+																bracketSets = 0;
+																DataType node;
+																while (!isEmptyStack(s))
+																{
+																	node = getTop(s);
+																	node.value *= (yyvsp[-1].ival);
+																	temp = record->top;
+																	if (firsFlag)
+																	{
+																		push(record, node);
+																		pop(s);
+																		firsFlag = 0;
+																	}
+																	else
+																	{
+																		while ((temp) != 0x48 && (temp) != 0x0)
+																		{
+																			if (strcmp(temp->info.element, node.element) == 0)
+																			{
+																				temp->info.value += node.value;
+																				pop(s);
+																				addedFlag = 1;
+																			}
+																			temp = temp->link;
+																		}
+																		if (!addedFlag)
+																		{
+																			push(record, node);
+																			pop(s);
+																		}
+																		addedFlag = 0;
+																	}
+																}
+																destroyStack(s);
+																s = createEmptyStack();
+															}
+#line 1279 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 30 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    {(yyval.ival) = (yyvsp[0].ival);}
-#line 1252 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 71 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { (yyval.ival) = (yyvsp[0].ival); }
+#line 1285 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 31 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    {(yyval.ival) = 1;}
-#line 1258 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 9:
-#line 33 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    { printf(" Match molecules->non_term ( item ) molecules\n"); }
-#line 1264 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 10:
-#line 34 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    { printf(" Match molecules->item\n"); }
-#line 1270 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 72 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    { (yyval.ival) = 1;  }
+#line 1291 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 36 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    { printf(" Match non_molecules->molecules\n"); }
-#line 1276 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 12:
-#line 37 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    { printf("Match non_molecules-> lambda\n"); }
-#line 1282 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 13:
-#line 39 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    { printf(" Match non_term->item\n"); }
-#line 1288 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 14:
-#line 40 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    { printf(" Match non_term-> lambda\n"); }
-#line 1294 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 15:
-#line 42 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    { printf(" Match non_digit->%d\n", (yyvsp[0].ival)); (yyval.ival) = (yyvsp[0].ival); }
+#line 77 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    {
+																bracketSets = 1;
+																bracket_s = createEmptyStack();
+															}
 #line 1300 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 43 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    { printf(" Match non_digit->1\n"); (yyval.ival) = 1; }
-#line 1306 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 88 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    {
+																bracketSets = 0;
+																DataType node;
+																while (!isEmptyStack(bracket_s))
+																{
+																	node = getTop(bracket_s);
+																	node.value *= (yyvsp[0].ival);
+																	push(s, node);
+																	pop(bracket_s);
+																}
+																destroyStack(bracket_s);
+															}
+#line 1317 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 45 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    { printf(" Match item->LETTER subitem\n"); }
-#line 1312 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 101 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    {													
+ 																bracketSets = 0;
+																DataType node;
+																while (!isEmptyStack(bracket_s))
+																{
+																	node = getTop(bracket_s);
+																	node.value *= 1;
+																	push(s, node);
+																	pop(bracket_s);
+																}
+																destroyStack(bracket_s);
+															}
+#line 1334 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
-  case 19:
-#line 48 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    { printf(" Match subitem->subitem element\n"); }
-#line 1318 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+  case 18:
+#line 115 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    {
+				    											DataType node; 
+				  				 								node.element = (yyvsp[0].cval); 
+		    													if (!rightHandSide)
+		    													{
+		    														node.value = 1;
+		    													}
+		    													else
+		    													{
+		    														node.value = -1;
+		    													}
+		    													if (!bracketSets)
+		    													{
+		    														push(s, node);	
+					    										}
+					    										else
+		    													{
+		    														push(bracket_s, node);
+		    													}
+		    												}
+#line 1359 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 20:
+#line 137 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    {
+				    											DataType node; 
+				  				 								node.element = (yyvsp[0].cval); 
+		    													if (!rightHandSide)
+		    													{
+		    														node.value = 1;
+		    													}
+		    													else
+		    													{
+		    														node.value = -1;
+		    													}
+		    													if (!bracketSets)
+		    													{
+		    														push(s, node);	
+					    										}
+					    										else
+		    													{
+		    														push(bracket_s, node);
+		    													}
+		    												}
+#line 1384 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 23:
+#line 161 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    {
+																int temp;
+																if (!rightHandSide)
+																{
+																	temp = +((yyvsp[0].ival) - 1);
+																}
+																else
+																{
+										  							temp = -((yyvsp[0].ival) - 1);
+																}
+																if (!bracketSets)
+																{
+																	s->top->info.value += temp;
+																}
+																else
+																{
+																	bracket_s->top->info.value += temp;
+																}
+															}
+#line 1408 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 24:
+#line 181 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    {
+				    											DataType node; 
+				  				 								node.element = (yyvsp[0].cval); 
+		    													if (!rightHandSide)
+		    													{
+		    														node.value = 1;
+		    													}
+		    													else
+		    													{
+		    														node.value = -1;
+		    													}
+		    													if (!bracketSets)
+		    													{
+		    														push(s, node);	
+					    										}
+					    										else
+		    													{
+		    														push(bracket_s, node);
+		    													}
+		    												}
+#line 1433 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1322 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 1437 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1546,7 +1661,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 54 "ch6_problem_yacc_test.y" /* yacc.c:1906  */
+#line 202 "ch6_problem_yacc_test.y" /* yacc.c:1906  */
 
 void yyerror (const char *message)
 {
@@ -1555,6 +1670,7 @@ void yyerror (const char *message)
 }
 
 int main(int argc, char *argv[]) {
+		record = createEmptyStack();
 		s = createEmptyStack();
         yyparse();
         return(0);
