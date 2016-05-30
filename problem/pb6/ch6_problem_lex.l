@@ -7,8 +7,8 @@
 [0-9]   	 { ECHO; yylval.ival = atoi(yytext); return(DIGITS); }
 \+     		 { ECHO; return(yytext[0]); }
 "->" 		 { ECHO; yylval.ival = '->'; return(target); }
-\(			 { ECHO; return(yytext[0]); }
-\)			 { ECHO; return(yytext[0]); }
-[A-Z][a-z]?  { ECHO; yylval.cval = strdup(yytext); return(LETTER); }
+\(		 { ECHO; return(yytext[0]); }
+\)		 { ECHO; return(yytext[0]); }
+[A-Z][a-z]?  	{ ECHO; yylval.cval = strdup(yytext); return(LETTER); }
 %%
 
