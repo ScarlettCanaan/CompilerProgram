@@ -1,5 +1,5 @@
 %{
-	#include "ch6_problem_yacc.tab.h"
+	#include "ch6_problem_yacc_test.tab.c"
 %}
 %%
 \n	    	 { ECHO; return (0);  /* EOF */}
