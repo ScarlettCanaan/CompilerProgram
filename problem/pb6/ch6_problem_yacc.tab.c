@@ -70,7 +70,7 @@
 void yyerror(const char *message);
 PLinkStack record;
 PLinkStack s;
-PLinkStack bracket_s;
+PLinkStack bracket_s[10];
 PNode temp;
 int bracketSets = 0;
 int rightHandSide = 0;
@@ -385,7 +385,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  6
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   19
+#define YYLAST   18
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  10
@@ -441,9 +441,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    28,    28,    28,    30,    31,    33,    71,    72,    74,
-      75,    77,    81,    82,    84,    85,    87,   101,   115,   114,
-     136,   158,   159,   161,   180
+       0,    28,    28,    28,    33,    34,    36,    74,    75,    77,
+      78,    80,    84,    85,    87,    88,    90,   118,   146,   145,
+     167,   189,   190,   192,   211
 };
 #endif
 
@@ -468,10 +468,10 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF -16
+#define YYPACT_NINF -23
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-16)))
+  (!!((Yystate) == (-23)))
 
 #define YYTABLE_NINF -16
 
@@ -482,9 +482,9 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -1,   -16,     1,    -2,   -16,     4,   -16,   -16,    -1,   -16,
-     -16,     2,     5,    -1,   -16,     3,   -16,     7,   -16,   -16,
-     -16,     3,     4,   -16,     0,     8,   -16,    -4,   -16,   -16
+       1,   -23,     9,    -4,   -23,     6,   -23,   -23,     1,   -23,
+     -23,     3,     5,     1,   -23,     4,   -23,     7,   -23,   -23,
+     -23,     4,     6,   -23,     8,    12,   -23,    -2,   -23,   -23
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -494,14 +494,14 @@ static const yytype_uint8 yydefact[] =
 {
        8,     7,     0,     0,     5,    15,     1,     2,     8,    18,
        6,     0,    10,     8,     4,    22,    11,     3,    23,    24,
-      19,    22,     0,    21,     0,    17,    16,    13,    12,     9
+      19,    22,    15,    21,     0,    17,    16,    13,    12,     9
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -16,   -16,   -16,     6,     9,   -16,   -15,   -16,   -16,   -16,
-     -16,    -7,   -16,    -5,   -16
+     -23,   -23,   -23,    -1,    10,   -23,   -22,   -23,   -23,   -23,
+     -23,   -23,   -23,    -5,   -23
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -516,14 +516,14 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       9,     6,     1,     7,   -15,     8,    18,    19,     9,    25,
-      16,    26,    28,   -14,     8,    24,    23,    14,     0,    17
+      24,     7,     9,     8,     1,    28,   -15,    18,    19,     6,
+       9,    16,    17,   -14,     8,    26,    23,    25,    14
 };
 
-static const yytype_int8 yycheck[] =
+static const yytype_uint8 yycheck[] =
 {
-       4,     0,     3,     5,     8,     7,     3,     4,     4,     9,
-       8,     3,    27,     8,     7,    22,    21,     8,    -1,    13
+      22,     5,     4,     7,     3,    27,     8,     3,     4,     0,
+       4,     8,    13,     8,     7,     3,    21,     9,     8
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -532,7 +532,7 @@ static const yytype_uint8 yystos[] =
 {
        0,     3,    11,    13,    14,    15,     0,     5,     7,     4,
       16,    19,    21,    12,    14,    22,     8,    13,     3,     4,
-      23,    24,    17,    23,    21,     9,     3,    20,    16,    18
+      23,    24,    17,    23,    16,     9,     3,    20,    16,    18
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -1232,208 +1232,239 @@ yyreduce:
 
   case 3:
 #line 28 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    { showStack(record); }
-#line 1237 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+    { 
+																			record = sort(record);
+																			showStack(record); 
+																		}
+#line 1240 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 33 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+#line 36 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
     { 
-																bracketSets = 0;
-																DataType node;
-																while (!isEmptyStack(s))
-																{
-																	node = getTop(s);
-																	node.value *= (yyvsp[-1].ival);
-																	temp = record->top;
-																	if (firsFlag)
-																	{
-																		push(record, node);
-																		pop(s);
-																		firsFlag = 0;
-																	}
-																	else
-																	{
-																		while ((temp) != 0x48 && (temp) != 0x0)
-																		{
-																			if (strcmp(temp->info.element, node.element) == 0)
-																			{
-																				temp->info.value += node.value;
-																				pop(s);
-																				addedFlag = 1;
-																			}
-																			temp = temp->link;
-																		}
-																		if (!addedFlag)
-																		{
-																			push(record, node);
-																			pop(s);
-																		}
-																		addedFlag = 0;
-																	}
-																}
-																destroyStack(s);
-																s = createEmptyStack();
-															}
-#line 1279 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+										bracketSets = 0;
+										DataType node;
+										while (!isEmptyStack(s))
+										{
+											node = getTop(s);
+											node.value *= (yyvsp[-1].ival);
+											temp = record->top;
+											if (firsFlag)
+											{
+												push(record, node);
+												pop(s);
+												firsFlag = 0;
+											}
+											else
+											{
+												while ((temp) != 0x48 && (temp) != 0x0)
+												{
+													if (strcmp(temp->info.element, node.element) == 0)
+													{
+														temp->info.value += node.value;
+														pop(s);
+														addedFlag = 1;
+													}
+													temp = temp->link;
+												}
+												if (!addedFlag)
+												{
+													push(record, node);
+													pop(s);
+												}
+												addedFlag = 0;
+											}
+										}
+										destroyStack(s);
+										s = createEmptyStack();
+									}
+#line 1282 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 71 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+#line 74 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
     { (yyval.ival) = (yyvsp[0].ival); }
-#line 1285 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 1288 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 72 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+#line 75 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
     { (yyval.ival) = 1;  }
-#line 1291 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 1294 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 77 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+#line 80 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
     {
-																bracketSets = 1;
-																bracket_s = createEmptyStack();
-															}
-#line 1300 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+										bracket_s[bracketSets] = createEmptyStack();
+										++bracketSets;
+									}
+#line 1303 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 88 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+#line 91 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
     {
-																bracketSets = 0;
-																DataType node;
-																while (!isEmptyStack(bracket_s))
-																{
-																	node = getTop(bracket_s);
-																	node.value *= (yyvsp[0].ival);
-																	push(s, node);
-																	pop(bracket_s);
-																}
-																destroyStack(bracket_s);
-															}
-#line 1317 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 17:
-#line 101 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
-    {													
- 																bracketSets = 0;
-																DataType node;
-																while (!isEmptyStack(bracket_s))
-																{
-																	node = getTop(bracket_s);
-																	node.value *= 1;
-																	push(s, node);
-																	pop(bracket_s);
-																}
-																destroyStack(bracket_s);
-															}
+										DataType node;
+										if (bracketSets == 1)
+										{
+											while (!isEmptyStack(bracket_s[0]))
+											{
+												node = getTop(bracket_s[0]);
+												node.value *= (yyvsp[0].ival);
+												push(s, node);
+												pop(bracket_s[0]);
+											}
+											destroyStack(bracket_s[0]);
+										}
+										else
+										{
+											while (!isEmptyStack(bracket_s[bracketSets-1]))
+											{
+												node = getTop(bracket_s[bracketSets-1]);
+												node.value *= (yyvsp[0].ival);
+												push(bracket_s[bracketSets-2], node);
+												pop(bracket_s[bracketSets-1]);
+											}
+											destroyStack(bracket_s[bracketSets-1]);										
+										}
+										--bracketSets;
+									}
 #line 1334 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
+  case 17:
+#line 118 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+    {													
+										DataType node;
+										if (bracketSets == 1)
+										{
+											while (!isEmptyStack(bracket_s[0]))
+											{
+												node = getTop(bracket_s[0]);
+												node.value *= 1;
+												push(s, node);
+												pop(bracket_s[0]);
+											}
+											destroyStack(bracket_s[0]);
+										}
+										else
+										{
+											while (!isEmptyStack(bracket_s[bracketSets-1]))
+											{
+												node = getTop(bracket_s[bracketSets-1]);
+												node.value *= 1;
+												push(bracket_s[bracketSets-2], node);
+												pop(bracket_s[bracketSets-1]);
+											}
+											destroyStack(bracket_s[bracketSets-1]);										
+										}
+										--bracketSets;
+									}
+#line 1365 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+    break;
+
   case 18:
-#line 115 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+#line 146 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
     {
-				    											DataType node; 
-				  				 								node.element = (yyvsp[0].cval); 
-		    													if (!rightHandSide)
-		    													{
-		    														node.value = 1;
-		    													}
-		    													else
-		    													{
-		    														node.value = -1;
-		    													}
-		    													if (!bracketSets)
-		    													{
-		    														push(s, node);	
-					    										}
-					    										else
-		    													{
-		    														push(bracket_s, node);
-		    													}
-		    												}
-#line 1359 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+				    						DataType node; 
+				  				 		node.element = (yyvsp[0].cval); 
+		    								if (!rightHandSide)
+		    								{
+		    									node.value = 1;
+		    								}
+		    								else
+		    								{
+		    									node.value = -1;
+		    								}
+		    								if (!bracketSets)
+		    								{
+		    									push(s, node);	
+					    					}
+					    					else
+		    								{
+		    									push(bracket_s[bracketSets-1], node);
+		    								}
+		    							}
+#line 1390 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 137 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+#line 168 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
     {
-				    											DataType node; 
-				  				 								node.element = (yyvsp[0].cval); 
-		    													if (!rightHandSide)
-		    													{
-		    														node.value = 1;
-		    													}
-		    													else
-		    													{
-		    														node.value = -1;
-		    													}
-		    													if (!bracketSets)
-		    													{
-		    														push(s, node);	
-					    										}
-					    										else
-		    													{
-		    														push(bracket_s, node);
-		    													}
-		    												}
-#line 1384 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+				    						DataType node; 
+				  				 		node.element = (yyvsp[0].cval); 
+		    								if (!rightHandSide)
+		    								{
+		    									node.value = 1;
+		    								}
+		    								else
+		    								{
+		    									node.value = -1;
+		    								}
+		    								if (!bracketSets)
+		    								{
+		    									push(s, node);	
+					    					}
+					    					else
+		    								{
+		    									push(bracket_s[bracketSets-1], node);
+		    								}
+		    							}
+#line 1415 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 161 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+#line 192 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
     {
-																int temp;
-																if (!rightHandSide)
-																{
-																	temp = +((yyvsp[0].ival) - 1);
-																}
-																else
-																{
-										  							temp = -((yyvsp[0].ival) - 1);
-																}
-																if (!bracketSets)
-																{
-																	s->top->info.value += temp;
-																}
-																else
-																{
-																	bracket_s->top->info.value += temp;
-																}
-															}
-#line 1408 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+										int temp;
+										if (!rightHandSide)
+										{
+											temp = +((yyvsp[0].ival) - 1);
+										}
+										else
+										{
+										  	temp = -((yyvsp[0].ival) - 1);
+										}
+										if (!bracketSets)
+										{
+											s->top->info.value += temp;
+										}
+										else
+										{
+											bracket_s[bracketSets-1]->top->info.value += temp;
+										}
+									}
+#line 1439 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 181 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
+#line 212 "ch6_problem_yacc_test.y" /* yacc.c:1646  */
     {
-				    											DataType node; 
-				  				 								node.element = (yyvsp[0].cval); 
-		    													if (!rightHandSide)
-		    													{
-		    														node.value = 1;
-		    													}
-		    													else
-		    													{
-		    														node.value = -1;
-		    													}
-		    													if (!bracketSets)
-		    													{
-		    														push(s, node);	
-					    										}
-					    										else
-		    													{
-		    														push(bracket_s, node);
-		    													}
-		    												}
-#line 1433 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+				    						DataType node; 
+				  				 		node.element = (yyvsp[0].cval); 
+		    								if (!rightHandSide)
+		    								{
+		    									node.value = 1;
+		    								}
+		    								else
+		    								{
+		    									node.value = -1;
+		    								}
+		    								if (!bracketSets)
+		    								{
+		    									push(s, node);	
+					    					}
+					    					else
+		    								{
+		    									push(bracket_s[bracketSets-1], node);
+		    								}
+		    							}
+#line 1464 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1437 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
+#line 1468 "ch6_problem_yacc.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1661,7 +1692,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 202 "ch6_problem_yacc_test.y" /* yacc.c:1906  */
+#line 233 "ch6_problem_yacc_test.y" /* yacc.c:1906  */
 
 void yyerror (const char *message)
 {

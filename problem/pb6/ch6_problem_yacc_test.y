@@ -25,10 +25,14 @@ char* cval;
 %type <ival> non_digit
 %left '+'
 %%
+<<<<<<< HEAD
 line	    :	 expression  target { rightHandSide = 1; }  expression	{ 
 																			record = sort(record);
 																			showStack(record); 
 																		}
+=======
+line	    :	 expression  target { rightHandSide = 1; }  expression	{ record = sort(record); showStack(record); }
+>>>>>>> 70d8e05257dc7a22a4285f80cc1305ad4eab0aeb
 	    ;
 expression  :	 expression  '+'  chemical
 	    |	 chemical
@@ -74,12 +78,21 @@ chemical    :	 num molecules						{
 num 	    :    DIGITS    						{ $$ = $1; }
 	    |			   					{ $$ = 1;  }
 	    ;
+<<<<<<< HEAD
 molecules   :    non_term '(' left molecules ')' non_digit non_mole
 	    |    item  										
 	    ;
 left 	    :						{
 										bracket_s[bracketSets] = createEmptyStack();
 										++bracketSets;
+=======
+molecules   :    non_term '(' left item ')' non_digit non_mole
+	    |    item  										
+	    ;
+left 	    :								{
+										bracketSets = 1;
+										bracket_s = createEmptyStack();
+>>>>>>> 70d8e05257dc7a22a4285f80cc1305ad4eab0aeb
 									}
 non_mole    :    molecules 									
 	    | 												
@@ -89,6 +102,7 @@ non_term    :	 item
 	    ;
 non_digit   :    DIGITS  									
 									{
+<<<<<<< HEAD
 										DataType node;
 										if (bracketSets == 1)
 										{
@@ -140,6 +154,31 @@ non_digit   :    DIGITS
 											destroyStack(bracket_s[bracketSets-1]);										
 										}
 										--bracketSets;
+=======
+										bracketSets = 0;
+										DataType node;
+										while (!isEmptyStack(bracket_s))
+										{
+											node = getTop(bracket_s);
+											node.value *= $1;
+											push(s, node);
+											pop(bracket_s);
+										}
+										destroyStack(bracket_s);
+									}
+ 	    | 												
+ 									{													
+ 										bracketSets = 0;
+										DataType node;
+										while (!isEmptyStack(bracket_s))
+										{
+											node = getTop(bracket_s);
+											node.value *= 1;
+											push(s, node);
+											pop(bracket_s);
+										}
+										destroyStack(bracket_s);
+>>>>>>> 70d8e05257dc7a22a4285f80cc1305ad4eab0aeb
 									}
  	    ;
 item        :    LETTER 
@@ -160,7 +199,11 @@ item        :    LETTER
 					    					}
 					    					else
 		    								{
+<<<<<<< HEAD
 		    									push(bracket_s[bracketSets-1], node);
+=======
+		    									push(bracket_s, node);
+>>>>>>> 70d8e05257dc7a22a4285f80cc1305ad4eab0aeb
 		    								}
 		    							}
  		 subitem	 						
@@ -182,7 +225,11 @@ item        :    LETTER
 					    					}
 					    					else
 		    								{
+<<<<<<< HEAD
 		    									push(bracket_s[bracketSets-1], node);
+=======
+		    									push(bracket_s, node);
+>>>>>>> 70d8e05257dc7a22a4285f80cc1305ad4eab0aeb
 		    								}
 		    							}
 	    ;
@@ -205,7 +252,11 @@ element     :	 DIGITS							{
 										}
 										else
 										{
+<<<<<<< HEAD
 											bracket_s[bracketSets-1]->top->info.value += temp;
+=======
+											bracket_s->top->info.value += temp;
+>>>>>>> 70d8e05257dc7a22a4285f80cc1305ad4eab0aeb
 										}
 									}
 	    |	 LETTER		
@@ -226,7 +277,11 @@ element     :	 DIGITS							{
 					    					}
 					    					else
 		    								{
+<<<<<<< HEAD
 		    									push(bracket_s[bracketSets-1], node);
+=======
+		    									push(bracket_s, node);
+>>>>>>> 70d8e05257dc7a22a4285f80cc1305ad4eab0aeb
 		    								}
 		    							}
 			;
