@@ -9,6 +9,6 @@
 "->" 		 { yylval.ival = '->'; return(target); }
 \(		 { return(yytext[0]); }
 \)		 { return(yytext[0]); }
-[A-Z][a-z	 { yylval.cval = strdup(yytext); return(LETTER); }
+[A-Z][a-z]	 { yylval.cval = strdup(yytext); return(LETTER); }
 %%
 
