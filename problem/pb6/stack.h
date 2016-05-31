@@ -156,8 +156,4 @@ PLinkStack sort(PLinkStack stack)
         addFlag = 0;
     }
     return dest;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 70d8e05257dc7a22a4285f80cc1305ad4eab0aeb
